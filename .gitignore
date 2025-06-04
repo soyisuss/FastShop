@@ -17,8 +17,8 @@ Thumbs.db
 
 *.~*
 
-models/
-data/
+# models/
+# data/
 
 *.pdf
 
