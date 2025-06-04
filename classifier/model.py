@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, models, transforms
 from torch.utils.data import DataLoader
+from torchvision.models import resnet18, ResNet18_Weights
 from PIL import Image
 import os
 
@@ -10,7 +11,6 @@ import os
 def train_model(data_dir="data", model_path="models/classifier_resnet18.pt", num_epochs=5):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # 1. Transformaciones
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
@@ -18,19 +18,17 @@ def train_model(data_dir="data", model_path="models/classifier_resnet18.pt", num
                              std=[0.229, 0.224, 0.225])
     ])
 
-    # 2. Dataset y DataLoader
     dataset = datasets.ImageFolder(data_dir, transform=transform)
     dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 
     class_names = dataset.classes
     num_classes = len(class_names)
 
-    # 3. Modelo preentrenado
-    model = models.resnet18(pretrained=True)
+    model = resnet18(weights=ResNet18_Weights.DEFAULT)
+
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     model = model.to(device)
 
-    # 4. Entrenamiento
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
 
@@ -51,7 +49,6 @@ def train_model(data_dir="data", model_path="models/classifier_resnet18.pt", num
         print(
             f"Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(dataloader):.4f}")
 
-    # 5. Guardar modelo
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
     torch.save({
         "model_state_dict": model.state_dict(),
