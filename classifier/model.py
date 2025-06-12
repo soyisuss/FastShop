@@ -64,7 +64,7 @@ def load_model(model_path="models/classifier_resnet18.pt"):
     checkpoint = torch.load(model_path, map_location=device)
     class_names = checkpoint["class_names"]
 
-    model = models.resnet18(pretrained=False)
+    model = models.resnet18(weights=None)
     model.fc = nn.Linear(model.fc.in_features, len(class_names))
     model.load_state_dict(checkpoint["model_state_dict"])
     model = model.to(device)

@@ -1,8 +1,0 @@
-=== TICKET DE COMPRA ===
-Fecha: 2025-06-04 07:04:22
-
-Productos:
-- Crema Lala x1 @ $12.00 = $12.00
-
-TOTAL: $12.00
-=========================
