@@ -1,18 +1,8 @@
 # Deep Learning
 torch>=2.0.0
 torchvision>=0.15.0
-
-# Computer Vision
 opencv-python>=4.8.0
-
-# Image Processing
 Pillow>=10.0.0
-
-# PDF Generation
 reportlab>=4.0.0
-
-# Data Science (optional but recommended)
 numpy>=1.24.0
-
-# System utilities
 pathlib2>=2.3.7
